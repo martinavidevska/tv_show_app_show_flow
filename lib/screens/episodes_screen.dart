@@ -5,7 +5,7 @@ import 'package:group_project/services/api_services.dart';
 
 class EpisodesScreen extends StatefulWidget {
   final int showId;
-  const EpisodesScreen({Key? key, required this.showId}) : super(key: key);
+  const EpisodesScreen({super.key, required this.showId});
 
   @override
   _EpisodesScreenState createState() => _EpisodesScreenState();
@@ -65,7 +65,7 @@ class _EpisodesScreenState extends State<EpisodesScreen> {
       body: FutureBuilder<List<Episode>>(
         future: ApiService.getShowEpisodes(widget.showId),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting || showDetails == null) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -203,7 +203,7 @@ class _EpisodesScreenState extends State<EpisodesScreen> {
                       elevation: 4.0,
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.red,
-                      child: Container(
+                      child: SizedBox(
                         width: 150,
                         child: Column(
                           children: List.generate(totalSeasons, (index) {

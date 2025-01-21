@@ -6,9 +6,9 @@ class ActorCard extends StatelessWidget {
   final Actor actor;
 
   const ActorCard({
-    Key? key,
+    super.key,
     required this.actor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,11 @@ class ActorCard extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 40,
-            backgroundImage: actor.person.image?.medium != null
-                ? NetworkImage(actor.person.image!.medium)
-                : null, // Fallback to default color if image is null
+            backgroundImage: actor.person.image.medium != null
+                ? NetworkImage(actor.person.image.medium)
+                : null, 
             backgroundColor: Colors.grey.shade200,
-            child: actor.person.image?.medium == null
+            child: actor.person.image.medium == null
                 ? const Icon(
                     Icons.person,
                     color: Colors.grey,

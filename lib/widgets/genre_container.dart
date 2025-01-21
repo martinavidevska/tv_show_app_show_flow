@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class GenreContainer extends StatelessWidget {
   final String genre;
 
-  const GenreContainer({Key? key, required this.genre}) : super(key: key);
+  const GenreContainer({super.key, required this.genre});
 
   @override
   Widget build(BuildContext context) {

@@ -7,8 +7,7 @@ class CastScreen extends StatefulWidget {
   final int showId;
   final String showName;
 
-  const CastScreen({Key? key, required this.showId, required this.showName})
-      : super(key: key);
+  const CastScreen({super.key, required this.showId, required this.showName});
 
   @override
   _CastScreenState createState() => _CastScreenState();

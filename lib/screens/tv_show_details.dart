@@ -11,7 +11,7 @@ import '../providers/tv_show_provider.dart';
 class ShowDetailsScreen extends StatefulWidget {
   final int showId;
 
-  const ShowDetailsScreen({Key? key, required this.showId}) : super(key: key);
+  const ShowDetailsScreen({super.key, required this.showId});
 
   @override
   State<ShowDetailsScreen> createState() => _ShowDetailsScreenState();

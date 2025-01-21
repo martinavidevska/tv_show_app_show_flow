@@ -63,13 +63,13 @@ class ActorDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(actor.person.birthday ?? 'no info',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text(actor.person.country?.name ?? 'unknown', style: TextStyle(
+                  Text(actor.person.country?.name ?? 'unknown', style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),),

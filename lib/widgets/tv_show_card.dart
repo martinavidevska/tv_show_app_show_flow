@@ -32,7 +32,7 @@ class TVShowCard extends StatelessWidget {
                 height: 250,
                 child: show.image?.medium != null
                     ? Image.network(
-                        show.image!.medium!,
+                        show.image!.medium,
                         fit: BoxFit.cover,
                         width: double.infinity,
                       )

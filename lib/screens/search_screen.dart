@@ -6,7 +6,7 @@ import 'package:group_project/screens/home_screen.dart';
 import 'package:group_project/services/api_services.dart';
 
 class SearchTvShowScreen extends StatefulWidget {
-  const SearchTvShowScreen({Key? key}) : super(key: key);
+  const SearchTvShowScreen({super.key});
 
   @override
   _SearchTvShowScreenState createState() => _SearchTvShowScreenState();

@@ -7,7 +7,7 @@ import 'package:group_project/services/api_services.dart';
 import 'package:group_project/widgets/bottom-navbar.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -69,12 +69,12 @@ class _MainScreenState extends State<MainScreen> {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (snapshot.hasData) {
             final shows = snapshot.data!;
-            final List<Widget> _screens = [
+            final List<Widget> screens = [
               TVShowList(shows: shows),  
               const SearchTvShowScreen(),
               FavoriteScreen()
             ];
-            return _screens[_currentIndex];
+            return screens[_currentIndex];
           } else {
             return const Center(child: Text("No TV shows available"));
           }

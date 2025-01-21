@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../providers/tv_show_provider.dart';
 
 class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final favoriteShows = Provider.of<TVShowProvider>(context).favorites;
@@ -12,9 +14,9 @@ class FavoriteScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Favorite Shows',
          style: TextStyle(color:Colors.white)),
-      backgroundColor: const Color(0xFF161B22),
+      backgroundColor: const Color(0xFF273343),
       ),
-      backgroundColor: const Color(0xFF161B22),
+      backgroundColor: const Color(0xFF273343),
       body: favoriteShows.isEmpty
           ? const Center(
               child: Text(
