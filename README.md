@@ -1,16 +1,29 @@
-# group_project
+Show Flow
 
-A new Flutter project.
+Show Flow is a Flutter-based mobile application designed to enhance your TV show experience. It allows users to browse, search, and discover TV shows while receiving personalized recommendations and notifications about shows they might like. Users can also mark shows as favorites and explore detailed information about each show, including episodes and cast.
 
-## Getting Started
+Features
 
-This project is a starting point for a Flutter application.
+User Authentication: Log in using email to access personalized features.
 
-A few resources to get you started if this is your first Flutter project:
+Personalized Recommendations: Get tailored show suggestions based on your preferences.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Search and Browse Shows: Easily search for and browse TV shows from a vast library.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Show Details: View detailed information, including descriptions, episodes, and cast.
+
+Favorite Box: Save your favorite shows for quick access.
+
+Notifications: Receive alerts about new shows or recommendations.
+
+Technologies Used
+
+Flutter & Dart: For building the mobile app’s UI and functionality.
+
+Firebase: For user authentication and database management (optional).
+
+TvMaze Api: To fetch show data dynamically (https://www.tvmaze.com/api) .
+
+Figma Prototype for my app:
+https://www.figma.com/design/v0R0oN8C7mYgyGaiPjpt1Y/ShowFlow?node-id=0-1&p=f&t=usyIPhGqAvaNPjvG-0
+
