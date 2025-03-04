@@ -32,11 +32,12 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
   }
 
   void _toggleFavorite(ShowDetails show) {
-    Provider.of<TVShowProvider>(context, listen: false).toggleFavorite(show);
-      setState(() {});
+    final provider = Provider.of<TVShowProvider>(context, listen: false);
+    provider.toggleFavorite(show);
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(show.isFavorite
+        content: Text(provider.favoriteIds.contains(show.id)
             ? 'Added to favorites!'
             : 'Removed from favorites'),
       ),
@@ -45,18 +46,20 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<TVShowProvider>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFF273343),
-     appBar: AppBar(
-      backgroundColor: const Color(0xFF273343),
-      iconTheme: const IconThemeData(
-          color: Colors.white, 
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF273343),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
         ),
         title: Row(
           children: [
-           Image.asset(
+            Image.asset(
               'assets/images/logo.png',
-               height: 40,
+              height: 40,
             ),
             const SizedBox(width: 10),
           ],
@@ -71,6 +74,8 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (snapshot.hasData) {
             final show = snapshot.data!;
+            final isFavorite = provider.favoriteIds.contains(show.id);
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,31 +165,30 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                               [],
                         ),
                         const Divider(
-                          color: Colors.grey, 
-                          thickness: 1,       
-                          indent: 0,         
-                          endIndent: 0,      
-                        ),   
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
                         const SizedBox(height: 8),
                         DetailsRow(
-                            label: 'Premiered:',
-                            value: show.premiered ?? 'N/A'),
+                          label: 'Premiered:',
+                          value: show.premiered ?? 'N/A',
+                        ),
                         const Divider(
-                          color: Colors.grey, 
-                          thickness: 1,       
-                          indent: 0,         
-                          endIndent: 0,      
-                        ),   
-                        DetailsRow(
-                            label: 'Status:', value: show.status ?? 'N/A'),
-                        const Divider(
-                          color: Colors.grey, 
-                          thickness: 1,       
-                          indent: 0,         
-                          endIndent: 0,      
+                          color: Colors.grey,
+                          thickness: 1,
                         ),
                         DetailsRow(
-                            label: 'Language:', value: show.language ?? 'N/A'),
+                          label: 'Status:',
+                          value: show.status ?? 'N/A',
+                        ),
+                        const Divider(
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
+                        DetailsRow(
+                          label: 'Language:',
+                          value: show.language ?? 'N/A',
+                        ),
                       ],
                     ),
                   ),
@@ -193,20 +197,22 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                          IconButton(
-                          onPressed: () => _toggleFavorite(show),
+                        IconButton(
                           icon: Icon(
-                            show.isFavorite ? Icons.favorite : Icons.favorite_border,
-                            color: show.isFavorite ? Colors.red : Colors.white,
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Colors.grey,
                           ),
+                          onPressed: () => _toggleFavorite(show),
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    CastScreen(showId: show.id, showName: show.name),
+                                builder: (context) => CastScreen(
+                                  showId: show.id,
+                                  showName: show.name,
+                                ),
                               ),
                             );
                           },
@@ -215,8 +221,8 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                             backgroundColor: Colors.grey,
                             foregroundColor: Colors.white,
                             side: const BorderSide(
-                              color: Colors.white, 
-                              width: 2, 
+                              color: Colors.white,
+                              width: 2,
                             ),
                           ),
                         ),
@@ -235,12 +241,11 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
                             backgroundColor: Colors.grey,
                             foregroundColor: Colors.white,
                             side: const BorderSide(
-                              color: Colors.white, 
-                              width: 2, 
+                              color: Colors.white,
+                              width: 2,
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -258,5 +263,5 @@ class _ShowDetailsScreenState extends State<ShowDetailsScreen> {
 
 String cleanSummary(String? htmlSummary) {
   if (htmlSummary == null) return 'No summary available.';
-  return htmlSummary.replaceAll(RegExp(r'<[^>]*>'), ''); 
+  return htmlSummary.replaceAll(RegExp(r'<[^>]*>'), '');
 }

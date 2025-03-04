@@ -6,7 +6,6 @@ class TVShowCard extends StatelessWidget {
   final ShowDetails show;
 
   const TVShowCard({super.key, required this.show});
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

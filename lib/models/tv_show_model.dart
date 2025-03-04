@@ -11,7 +11,7 @@ class Show {
   }
 }
 
-class ShowDetails with ChangeNotifier{
+class ShowDetails with ChangeNotifier {
   final int id;
   final String name;
   final String? type;
@@ -24,44 +24,37 @@ class ShowDetails with ChangeNotifier{
   final String? summary;
   final int? weight;
   final Rating? rating;
-  bool isFavorite = false;
 
-  ShowDetails({
-    required this.id,
-    required this.name,
-    this.type,
-    this.language,
-    this.genres,
-    this.status,
-    this.premiered,
-    this.ended,
-    this.image,
-    this.summary,
-    this.weight,
-    this.rating,
-    this.isFavorite = false
-  });
+  ShowDetails(
+      {required this.id,
+      required this.name,
+      this.type,
+      this.language,
+      this.genres,
+      this.status,
+      this.premiered,
+      this.ended,
+      this.image,
+      this.summary,
+      this.weight,
+      this.rating});
 
   factory ShowDetails.fromJson(Map<String, dynamic> json) {
     return ShowDetails(
-      id: json['id'] ?? 0,
-      name: json['name'],
-      type: json['type'],
-      language: json['language'],
-      genres: json['genres'] != null ? List<String>.from(json['genres']) : [],
-      status: json['status'],
-      premiered: json['premiered'],
-      ended: json['ended'],
-      image:
-          json['image'] != null ? ImageDetails.fromJson(json['image']) : null,
-      summary: json['summary'],
-      weight: json['weight'],
-      rating: json['rating']  !=null ? Rating.fromJson(json['rating']) : null
-    );
-  }
-  void toggleFavorite() {
-    isFavorite = !isFavorite;
-    notifyListeners();
+        id: json['id'] ?? 0,
+        name: json['name'],
+        type: json['type'],
+        language: json['language'],
+        genres: json['genres'] != null ? List<String>.from(json['genres']) : [],
+        status: json['status'],
+        premiered: json['premiered'],
+        ended: json['ended'],
+        image:
+            json['image'] != null ? ImageDetails.fromJson(json['image']) : null,
+        summary: json['summary'],
+        weight: json['weight'],
+        rating:
+            json['rating'] != null ? Rating.fromJson(json['rating']) : null);
   }
 }
 
@@ -82,14 +75,12 @@ class ImageDetails {
   }
 }
 
- class Rating {
-    final double? average;
+class Rating {
+  final double? average;
 
-    Rating({
-      this.average
-    });
-    
-    factory Rating.fromJson(Map<String, dynamic> json) {
+  Rating({this.average});
+
+  factory Rating.fromJson(Map<String, dynamic> json) {
     return Rating(
       average: json['average'] != null
           ? (json['average'] is int
@@ -98,5 +89,4 @@ class ImageDetails {
           : null,
     );
   }
-
-  }
+}

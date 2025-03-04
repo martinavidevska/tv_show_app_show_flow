@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:group_project/models/tv_show_model.dart';
-import 'package:group_project/screens/home_screen.dart';
 import 'package:group_project/services/api_services.dart';
+import 'package:group_project/widgets/tv_show_grid.dart';
 
 class SearchTvShowScreen extends StatefulWidget {
   const SearchTvShowScreen({super.key});
@@ -79,12 +78,12 @@ class _SearchTvShowScreenState extends State<SearchTvShowScreen> {
             padding: const EdgeInsets.all(10.0),
             child: TextField(
               controller: _searchController,
-                style: const TextStyle(color: Colors.white), 
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 labelText: 'Search Shows',
                 hintText: 'Enter show name',
-                prefixIcon: const Icon(Icons.search, color: Colors.white), // Set prefix icon color to white
-                labelStyle: const TextStyle(color: Colors.white), // Set label text color to white
+                prefixIcon: const Icon(Icons.search, color: Colors.white),
+                labelStyle: const TextStyle(color: Colors.white),
                 hintStyle: const TextStyle(color: Colors.white),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
@@ -103,7 +102,7 @@ class _SearchTvShowScreenState extends State<SearchTvShowScreen> {
             ),
           Expanded(
             child: _searchResults.isNotEmpty
-                ? TVShowList(shows: _searchResults) // Pass ShowDetails here as well
+                ? TVShowGrid(shows: _searchResults)
                 : const Center(
                     child: Text('No results found. Start searching!'),
                   ),

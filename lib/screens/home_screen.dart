@@ -1,30 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:group_project/widgets/tv_show_card.dart';
-import '../models/tv_show_model.dart';
+import 'package:provider/provider.dart';
+import 'package:group_project/models/tv_show_model.dart';
+import 'package:group_project/providers/tv_show_provider.dart';
+import 'package:group_project/widgets/tv_show_grid.dart';
+import 'package:group_project/widgets/genre_container.dart';
 
-class TVShowList extends StatelessWidget {
-  final List<ShowDetails> shows;
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
-  const TVShowList({super.key, required this.shows});
+  final List<String> genres = const [
+    "All", "Horror", "Romance", "Comedy", "Action", "Drama"
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xFF273343),
-      child: GridView.builder(
-        padding: const EdgeInsets.all(8),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, 
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.7, 
+    final tvShowProvider = Provider.of<TVShowProvider>(context);
+
+    final List<ShowDetails> displayedShows = 
+        tvShowProvider.filteredShows.isNotEmpty
+            ? tvShowProvider.filteredShows
+            : tvShowProvider.allShows;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          child: Row(
+            children: genres.map((genre) {
+              return GestureDetector(
+                onTap: () {
+                  if (genre == "All") {
+                    tvShowProvider.clearGenreFilter();  
+                  } else {
+                    tvShowProvider.selectByGenre(genre);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: GenreContainer(genre: genre),
+                ),
+              );
+            }).toList(),
+          ),
         ),
-        itemCount: shows.length,
-        itemBuilder: (context, index) {
-          final show = shows[index];
-          return TVShowCard(show: show); 
-        },
-      ),
+
+        const SizedBox(height: 8),
+
+        Expanded(
+          child: TVShowGrid(shows: displayedShows),
+        ),
+      ],
     );
   }
 }

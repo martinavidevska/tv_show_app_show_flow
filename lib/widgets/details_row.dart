@@ -9,7 +9,7 @@ class DetailsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0.0, 4.0), // Add left padding
+      padding: const EdgeInsets.fromLTRB(16.0, 4.0, 0.0, 4.0), 
       child: Row(
         children: [
           Text(
