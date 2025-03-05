@@ -2,9 +2,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../models/tv_show_model.dart';
+import 'dart:math';
+
+import '../services/api_services.dart';
 import '../services/api_services.dart';
 
 class TVShowProvider with ChangeNotifier {
+  List<ShowDetails> _tvShows = [];
+  List<ShowDetails> get tvShows => _tvShows;
+
+
+  Future<List<ShowDetails>> fetchRandomTVShow() async {
+    try {
+      final randomIndex = Random().nextInt(100);
+      final randomShows = await ApiService.getShowByIndex(randomIndex);
+
+      if (randomShows.isNotEmpty) {
+        final randomShow = randomShows[Random().nextInt(randomShows.length)];
+        _tvShows = [randomShow];
+        notifyListeners();
+        return [randomShow];
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print('Failed to fetch random TV show: $e');
+      throw e;
+    }
+  }
   List<ShowDetails> allShows = [];
   List<ShowDetails> filteredShows = [];
   bool _isObscure = true;
@@ -126,7 +151,7 @@ class TVShowProvider with ChangeNotifier {
     try {
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'profilePictureUrl': downloadUrl,
-      }, SetOptions(merge: true)); 
+      }, SetOptions(merge: true));
     } catch (e) {
       print("Error saving profile picture URL to Firestore: $e");
     }
@@ -168,4 +193,6 @@ class TVShowProvider with ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+  
 }
