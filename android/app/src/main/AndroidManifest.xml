@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.group_project">
 
-    <!-- Дозволи за нотификации и прием на нотификации -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-    <!-- Queries треба да биде надвор од <application> -->
     <queries>
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
@@ -18,7 +18,11 @@
         android:label="group_project"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <!-- Main activity -->
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA5gQjbo41P7qgPHmL11pyMYi1ueRb7iIY" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -29,18 +33,12 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
 
-            <meta-data
-                android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme"
-                />
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <!-- Meta-data required by Flutter engine -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

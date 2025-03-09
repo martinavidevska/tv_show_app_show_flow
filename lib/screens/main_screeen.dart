@@ -5,6 +5,7 @@ import 'package:group_project/screens/home_screen.dart';
 import 'package:group_project/screens/login_screen.dart';
 import 'package:group_project/screens/profile_screen.dart';
 import 'package:group_project/screens/search_screen.dart';
+import 'package:group_project/screens/map_screen.dart'; // Added import for MapScreen
 import 'package:group_project/widgets/bottom-navbar.dart';
 import 'package:provider/provider.dart';
 import 'package:group_project/providers/tv_show_provider.dart';
@@ -22,7 +23,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadData();
+    });
   }
 
   void _loadData() {
@@ -78,6 +81,17 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(width: 10),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.map, color: Colors.white), // Map icon
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MapScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: provider.isLoading
           ? const Center(child: CircularProgressIndicator())
