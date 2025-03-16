@@ -11,7 +11,6 @@ class TVShowProvider with ChangeNotifier {
   List<ShowDetails> _tvShows = [];
   List<ShowDetails> get tvShows => _tvShows;
 
-
   Future<List<ShowDetails>> fetchRandomTVShow() async {
     try {
       final randomIndex = Random().nextInt(100);
@@ -30,6 +29,7 @@ class TVShowProvider with ChangeNotifier {
       throw e;
     }
   }
+
   List<ShowDetails> allShows = [];
   List<ShowDetails> filteredShows = [];
   bool _isObscure = true;
@@ -106,8 +106,7 @@ class TVShowProvider with ChangeNotifier {
           .doc(user.uid)
           .get();
       final data = doc.data();
-      print("the favorite shows ids are ");
-      print(data?['favorites']);
+      print(data?['name']);
 
       if (data != null && data['favorites'] != null) {
         favoriteIds = Set<int>.from(data['favorites'] ?? []);
@@ -158,41 +157,32 @@ class TVShowProvider with ChangeNotifier {
   }
 
   Future<void> fetchUserData() async {
-    isLoading = true;
-    notifyListeners();
-
     final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) return;
 
-    if (currentUser != null) {
-      email = currentUser.email;
+    final docRef =
+        FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+    email = currentUser.email;
 
-      try {
-        final doc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(currentUser.uid)
-            .get();
+    try {
+      final doc = await docRef.get();
 
-        if (doc.exists) {
-          name = doc['name'] ?? 'Unknown';
-          profilePictureUrl = doc['profilePictureUrl'];
-        } else {
-          name = 'Unknown';
-          profilePictureUrl = null;
+      if (doc.exists) {
+        final data = doc.data() ?? {};
+        final newName =
+            data.containsKey('name') ? data['name'] as String : 'Unknown';
+        final newProfilePic = data.containsKey('profilePictureUrl')
+            ? data['profilePictureUrl'] as String?
+            : null;
+
+        if (name != newName || profilePictureUrl != newProfilePic) {
+          name = newName;
+          profilePictureUrl = newProfilePic;
+          notifyListeners();
         }
-      } catch (e) {
-        print("Error fetching user data: $e");
-        name = 'Unknown';
-        profilePictureUrl = null;
       }
-    } else {
-      name = 'Guest';
-      email = 'Not logged in';
-      profilePictureUrl = null;
+    } catch (e) {
+      print("❌ Error fetching user data: $e");
     }
-
-    isLoading = false;
-    notifyListeners();
   }
-
-  
 }
